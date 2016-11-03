@@ -40,5 +40,36 @@ public class HashSetTest {
 	    assertTrue(addedSecond);
 	    assertTrue(containsSecond);
 	}
+
+
+
+    @Test
+	public void testHashSet_RemoveGoodHash() {
+	    HashSet<Person> set = new HashSet<>();
+	    boolean added = set.add(new Person(5));
+	    boolean removed = set.remove(new Person(5));
+	    assertTrue(added);
+	    assertTrue(removed);
+	}
+
+    @Test
+	public void testHashSet_RemoveGoodHashDidntAdd() {
+	    HashSet<Person> set = new HashSet<>();
+	    boolean removed = set.remove(new Person(5));
+	    assertFalse(removed);
+	}
+
+    @Test
+	public void testHashSet_RemoveHashCollision() {
+	    HashSet<PersonBadHash> set = new HashSet<>();
+	    boolean addedFirst = set.add(new PersonBadHash(5));
+	    boolean addedSecond = set.add(new PersonBadHash(15));
+	    boolean removedFirst = set.remove(new PersonBadHash(5));
+	    boolean removedSecond = set.remove(new PersonBadHash(15));
+	    assertTrue(addedFirst);
+	    assertTrue(removedFirst);
+	    assertTrue(addedSecond);
+	    assertTrue(removedSecond);
+	}
 }
 
