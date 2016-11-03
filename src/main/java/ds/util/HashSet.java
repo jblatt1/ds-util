@@ -81,7 +81,8 @@ public class HashSet<T> implements Set<T> {
 	return null;	
     }
     public boolean remove(Object o) {
-	return true;	
+	List<Object> bucket = this.getBucket(o);
+	return bucket.remove(o);
     }
 
     public boolean removeAll(Collection<?> c) {
