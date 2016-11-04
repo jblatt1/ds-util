@@ -1,15 +1,14 @@
 package ds.util;
 
-import java.util.Set;
 import java.util.Collection;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Iterator;
 
 
-public class HashSet<T> implements Set<T> {
+public class HashSet<T> {
 
-    private List<Object>[] buckets;
+    private List<T>[] buckets;
     private int numBuckets;
     private static final int DEFAULT_NUM_BUCKETS = 100;
 
@@ -22,7 +21,7 @@ public class HashSet<T> implements Set<T> {
 	this.buckets = new List[this.numBuckets];
     }
 
-    private List<Object> getBucket(Object o) {
+    private List<T> getBucket(T o) {
 	int hash = o.hashCode();
 	int bucketNum = hash%this.numBuckets;
 	if(this.buckets[bucketNum] == null) {
@@ -33,13 +32,13 @@ public class HashSet<T> implements Set<T> {
 
     public boolean add(T value) {
 	if(!this.contains(value)) {
-	    List<Object> bucket = this.getBucket(value);
+	    List<T> bucket = this.getBucket(value);
 	    return bucket.add(value);
 	}
 	return false;
     }
 
-    public boolean addAll(Collection<? extends T> c) {
+    public boolean addAll(Collection<T> c) {
 	for(T val: c) {
 	    if(!this.contains(val)) {
 		return false;
@@ -56,9 +55,9 @@ public class HashSet<T> implements Set<T> {
 
     }
 
-    public boolean contains(Object value) {
-	List<Object> bucket = this.getBucket(value);
-	for(Object o: bucket) {
+    public boolean contains(T value) {
+	List<T> bucket = this.getBucket(value);
+	for(T o: bucket) {
 	    if(o.equals(value)) {
 		return true;
 	    }
@@ -66,8 +65,8 @@ public class HashSet<T> implements Set<T> {
 	return false;
     }
 
-    public boolean containsAll(Collection<?> c) {
-	for(Object val: c) {
+    public boolean containsAll(Collection<T> c) {
+	for(T val: c) {
 	    if(!this.contains(val)) {
 		return false;
 	    }
@@ -80,13 +79,13 @@ public class HashSet<T> implements Set<T> {
     public Iterator<T> iterator() {
 	return null;	
     }
-    public boolean remove(Object o) {
-	List<Object> bucket = this.getBucket(o);
+    public boolean remove(T o) {
+	List<T> bucket = this.getBucket(o);
 	return bucket.remove(o);
     }
 
-    public boolean removeAll(Collection<?> c) {
-	for(Object val: c) {
+    public boolean removeAll(Collection<T> c) {
+	for(T val: c) {
 	    if(!this.remove(val)) {
 		return false;
 	    }
@@ -94,8 +93,8 @@ public class HashSet<T> implements Set<T> {
 	return true;
     }
 
-    public boolean retainAll(Collection<?> c) {
-	for(Object val: c) {
+    public boolean retainAll(Collection<T> c) {
+	for(T val: c) {
 	    if(!this.remove(val)) {
 		return false;
 	    }
