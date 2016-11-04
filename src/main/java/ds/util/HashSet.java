@@ -24,9 +24,13 @@ public class HashSet<T> {
 	this.size = 0;
     }
 
-    private List<T> getBucket(T o) {
+    private int indexOf(T o) {
 	int hash = o.hashCode();
-	int bucketNum = hash%this.numBuckets;
+	return hash%this.numBuckets;
+    }
+
+    private List<T> getBucket(T o) {
+	int bucketNum = this.indexOf(o);
 	if(this.buckets[bucketNum] == null) {
 	    this.buckets[bucketNum] = new LinkedList<>();
 	}
@@ -59,7 +63,7 @@ public class HashSet<T> {
     }
 
     public void clear() {
-
+	//TODO: use iterator to do this
     }
 
     public boolean contains(T value) {
@@ -81,7 +85,7 @@ public class HashSet<T> {
 	return true;
     }
     public boolean isEmpty() {
-	return true;	
+	return this.size == 0;
     }
     public Iterator<T> iterator() {
 	return null;	
@@ -117,10 +121,12 @@ public class HashSet<T> {
     }
 
     public Object[] toArray() {
+	//TODO: use iterator
 	return new Object[this.size()];
     }
 
     public T[] toArray(T[] a) {
+	//TODO: use iterator
 	return a;
     }
 }
