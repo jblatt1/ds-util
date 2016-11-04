@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.Iterator;
 
 
+@SuppressWarnings("unchecked")
 public class HashSet<T> {
 
     private List<T>[] buckets;
@@ -109,7 +110,7 @@ public class HashSet<T> {
 	return new Object[this.size()];
     }
 
-    public <T> T[] toArray(T[] a) {
+    public T[] toArray(T[] a) {
 	return a;
     }
 }
