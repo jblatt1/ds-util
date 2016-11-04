@@ -4,6 +4,7 @@ import ds.util.HashSet;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
 
 import ds.util.beans.Person;
 import ds.util.beans.PersonBadHash;
@@ -41,15 +42,15 @@ public class HashSetTest {
 	    assertTrue(containsSecond);
 	}
 
-
-
     @Test
 	public void testHashSet_RemoveGoodHash() {
 	    HashSet<Person> set = new HashSet<>();
 	    boolean added = set.add(new Person(5));
+	    assertEquals(1, set.size());
 	    boolean removed = set.remove(new Person(5));
 	    assertTrue(added);
 	    assertTrue(removed);
+	    assertEquals(0, set.size());
 	}
 
     @Test
@@ -57,6 +58,21 @@ public class HashSetTest {
 	    HashSet<Person> set = new HashSet<>();
 	    boolean removed = set.remove(new Person(5));
 	    assertFalse(removed);
+	    assertEquals(0, set.size());
+	}
+
+
+    @Test
+	public void testHashSet_SizeAddAndRemove() {
+	    HashSet<PersonBadHash> set = new HashSet<>();
+	    set.add(new PersonBadHash(5));
+	    assertEquals(1, set.size());
+	    set.add(new PersonBadHash(15));
+	    assertEquals(2, set.size());
+	    set.remove(new PersonBadHash(5));
+	    assertEquals(1, set.size());
+	    set.remove(new PersonBadHash(15));
+	    assertEquals(0, set.size());
 	}
 
     @Test
@@ -70,6 +86,7 @@ public class HashSetTest {
 	    assertTrue(removedFirst);
 	    assertTrue(addedSecond);
 	    assertTrue(removedSecond);
+	    assertEquals(0, set.size());
 	}
 }
 

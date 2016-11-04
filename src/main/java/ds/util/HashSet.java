@@ -11,6 +11,7 @@ public class HashSet<T> {
 
     private List<T>[] buckets;
     private int numBuckets;
+    private int size;
     private static final int DEFAULT_NUM_BUCKETS = 100;
 
     public HashSet() {
@@ -20,6 +21,7 @@ public class HashSet<T> {
     public HashSet(int numBuckets) {
 	this.numBuckets = numBuckets;
 	this.buckets = new List[this.numBuckets];
+	this.size = 0;
     }
 
     private List<T> getBucket(T o) {
@@ -34,7 +36,11 @@ public class HashSet<T> {
     public boolean add(T value) {
 	if(!this.contains(value)) {
 	    List<T> bucket = this.getBucket(value);
-	    return bucket.add(value);
+	    boolean added = bucket.add(value);
+	    if(added) {
+		this.size++;
+	    }
+	    return added;
 	}
 	return false;
     }
@@ -82,7 +88,11 @@ public class HashSet<T> {
     }
     public boolean remove(T o) {
 	List<T> bucket = this.getBucket(o);
-	return bucket.remove(o);
+	boolean removed = bucket.remove(o);
+	if(removed) {
+	    this.size--;
+	}
+	return removed;
     }
 
     public boolean removeAll(Collection<T> c) {
@@ -103,7 +113,7 @@ public class HashSet<T> {
 	return true;
     }
     public int size() {
-	return 0;
+	return this.size;
     }
 
     public Object[] toArray() {
