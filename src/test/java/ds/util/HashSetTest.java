@@ -91,12 +91,10 @@ public class HashSetTest {
 
     @Test
 	public void testHashSet_ToArray() {
-	    HashSet<Person> set = new HashSet<>(3);
+	    HashSet<Person> set = new HashSet<>(10);
 	    Person p = new Person(15);
 	    set.add(p);
 	    Object[] arr = set.toArray();
-	    System.out.println(p.hashCode());
-	    System.err.println(arr[0]);
 	    assertEquals(arr.length, 1);
 	    assertTrue(set.contains(arr[0]));
 	}

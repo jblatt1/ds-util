@@ -124,7 +124,7 @@ public class HashSet<T> {
     public Object[] toArray() {
 	Iterator it = this.iterator();
 	Object[] retVal = new Object[this.size()];
-	for(int i=0; i< this.size(); i++) {
+	for(int i=0; i < this.size() && it.hasNext(); i++) {
 	    retVal[i] = it.next();
 	}
 	return retVal; 
@@ -145,22 +145,20 @@ public class HashSet<T> {
 	}
 
 	private List<T> getBucket(int bucketNum) {
-	    if(this.curr.currBucket < entries.length) {
-		return this.entries[this.curr.currBucket];
+	    if(bucketNum < entries.length) {
+		return this.entries[bucketNum];
 	    }
 	    return null;
 	}
 
 	private Container getNext(Container o) {
 	    Container c = new Container(o);
-	    if(c.currBucket == this.entries.length) {
+	    if(c.currBucket >= this.entries.length) {
 		return c;
 	    }
 	    List<T> bucket = this.getBucket(c.currBucket);
 	    if(bucket == null || c.currIndex >= bucket.size()) {
-		c.currBucket++;
-		c.currIndex = 0;
-		return this.getNext(c);
+		return this.getNext(new Container(c.currBucket+1, 0));
 	    } else {
 		c.element = bucket.get(c.currIndex);
 		return c;
@@ -188,8 +186,7 @@ public class HashSet<T> {
 	}
 
 	public boolean hasNext() {
-	    Container c = new Container(this.curr);
-	    Container next = this.getNext(c);
+	    Container next = this.getNext(this.curr);
 	    return next.element != null;
 	}
 
