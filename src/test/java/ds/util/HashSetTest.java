@@ -94,9 +94,11 @@ public class HashSetTest {
 	    HashSet<Person> set = new HashSet<>(3);
 	    Person p = new Person(15);
 	    set.add(p);
-	    //Object[] arr = set.toArray();
-	    //assertEquals(arr.length, 1);
-	    //assertEquals(arr[0], p);
+	    Object[] arr = set.toArray();
+	    System.out.println(p.hashCode());
+	    System.err.println(arr[0]);
+	    assertEquals(arr.length, 1);
+	    assertTrue(set.contains(arr[0]));
 	}
 }
 

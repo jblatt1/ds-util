@@ -64,8 +64,8 @@ public class HashSet<T> {
 	//TODO: use iterator to do this
     }
 
-    public boolean contains(T value) {
-	List<T> bucket = this.getBucket(value);
+    public boolean contains(Object value) {
+	List<T> bucket = this.getBucket((T) value);
 	for(T o: bucket) {
 	    if(o.equals(value)) {
 		return true;
@@ -124,8 +124,7 @@ public class HashSet<T> {
     public Object[] toArray() {
 	Iterator it = this.iterator();
 	Object[] retVal = new Object[this.size()];
-	int i = 0;
-	while(it.hasNext()) {
+	for(int i=0; i< this.size(); i++) {
 	    retVal[i] = it.next();
 	}
 	return retVal; 
@@ -138,34 +137,34 @@ public class HashSet<T> {
 
     private class HashIterator implements Iterator {
 	private List<T>[] entries;
-	private int currBucket;
-	private int currIndex;
+	private Container curr;
 
 	public HashIterator() {
 	    this.entries = buckets;
-	    this.currBucket = 0;
-	    this.currIndex = 0;
+	    this.curr = new Container(0, 0);
 	}
 
 	private List<T> getBucket(int bucketNum) {
-	    if(this.currBucket < entries.length) {
-		return this.entries[this.currBucket];
+	    if(this.curr.currBucket < entries.length) {
+		return this.entries[this.curr.currBucket];
 	    }
 	    return null;
 	}
 
 	private Container getNext(Container o) {
 	    Container c = new Container(o);
-	    while(c.element == null) {
-		List<T> bucket = this.getBucket(this.currBucket);
-		if(bucket == null || bucket.size() < this.currIndex) {
-		    c.currIndex = 0;
-		    c.currBucket++;
-		} else {
-		    c.element = bucket.get(this.currIndex);
-		}
+	    if(c.currBucket == this.entries.length) {
+		return c;
 	    }
-	    return c;
+	    List<T> bucket = this.getBucket(c.currBucket);
+	    if(bucket == null || c.currIndex >= bucket.size()) {
+		c.currBucket++;
+		c.currIndex = 0;
+		return this.getNext(c);
+	    } else {
+		c.element = bucket.get(c.currIndex);
+		return c;
+	    }
 	}
 
 	private class Container {
@@ -189,16 +188,14 @@ public class HashSet<T> {
 	}
 
 	public boolean hasNext() {
-	    Container c = new Container(this.currBucket, this.currIndex);
+	    Container c = new Container(this.curr);
 	    Container next = this.getNext(c);
-	    return next.element == null;
+	    return next.element != null;
 	}
 
 	public T next() {
-	    Container c = new Container(this.currBucket, this.currIndex);
-	    Container next = this.getNext(c);
-	    this.currBucket = c.currBucket;
-	    this.currIndex = c.currIndex;
+	    Container next = this.getNext(this.curr);
+	    this.curr = next;
 	    return next.element;
 	}
 
