@@ -88,5 +88,15 @@ public class HashSetTest {
 	    assertTrue(removedSecond);
 	    assertEquals(0, set.size());
 	}
+
+    @Test
+	public void testHashSet_ToArray() {
+	    HashSet<Person> set = new HashSet<>(3);
+	    Person p = new Person(15);
+	    set.add(p);
+	    //Object[] arr = set.toArray();
+	    //assertEquals(arr.length, 1);
+	    //assertEquals(arr[0], p);
+	}
 }
 

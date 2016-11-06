@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.Iterator;
 
-
 @SuppressWarnings("unchecked")
 public class HashSet<T> {
 
@@ -58,7 +57,6 @@ public class HashSet<T> {
 	for(T val: c) {
 	    this.add(val);
 	}
-
 	return true;
     }
 
@@ -84,12 +82,15 @@ public class HashSet<T> {
 	}
 	return true;
     }
+
     public boolean isEmpty() {
 	return this.size == 0;
     }
+
     public Iterator<T> iterator() {
-	return null;	
+	return new HashIterator();	
     }
+
     public boolean remove(T o) {
 	List<T> bucket = this.getBucket(o);
 	boolean removed = bucket.remove(o);
@@ -121,13 +122,89 @@ public class HashSet<T> {
     }
 
     public Object[] toArray() {
-	//TODO: use iterator
-	return new Object[this.size()];
+	Iterator it = this.iterator();
+	Object[] retVal = new Object[this.size()];
+	int i = 0;
+	while(it.hasNext()) {
+	    retVal[i] = it.next();
+	}
+	return retVal; 
     }
 
     public T[] toArray(T[] a) {
 	//TODO: use iterator
 	return a;
+    }
+
+    private class HashIterator implements Iterator {
+	private List<T>[] entries;
+	private int currBucket;
+	private int currIndex;
+
+	public HashIterator() {
+	    this.entries = buckets;
+	    this.currBucket = 0;
+	    this.currIndex = 0;
+	}
+
+	private List<T> getBucket(int bucketNum) {
+	    if(this.currBucket < entries.length) {
+		return this.entries[this.currBucket];
+	    }
+	    return null;
+	}
+
+	private Container getNext(Container o) {
+	    Container c = new Container(o);
+	    while(c.element == null) {
+		List<T> bucket = this.getBucket(this.currBucket);
+		if(bucket == null || bucket.size() < this.currIndex) {
+		    c.currIndex = 0;
+		    c.currBucket++;
+		} else {
+		    c.element = bucket.get(this.currIndex);
+		}
+	    }
+	    return c;
+	}
+
+	private class Container {
+	    public int currBucket;
+	    public int currIndex;
+	    public T element;
+
+	    public Container() {
+		this(0);
+	    }
+	    public Container(int currBucket) {
+		this(currBucket, 0);
+	    }
+	    public Container(int currBucket, int currIndex) {
+		this.currBucket = currBucket;
+		this.currIndex = currIndex;
+	    }
+	    public Container(Container c) {
+		this(c.currBucket, c.currIndex); 
+	    }
+	}
+
+	public boolean hasNext() {
+	    Container c = new Container(this.currBucket, this.currIndex);
+	    Container next = this.getNext(c);
+	    return next.element == null;
+	}
+
+	public T next() {
+	    Container c = new Container(this.currBucket, this.currIndex);
+	    Container next = this.getNext(c);
+	    this.currBucket = c.currBucket;
+	    this.currIndex = c.currIndex;
+	    return next.element;
+	}
+
+	public void remove() {
+
+	}
     }
 }
 
