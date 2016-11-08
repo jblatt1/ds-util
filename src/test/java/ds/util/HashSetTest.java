@@ -7,7 +7,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 
 import ds.util.beans.Person;
-import ds.util.beans.PersonBadHash;
 
 public class HashSetTest {
 
@@ -31,11 +30,11 @@ public class HashSetTest {
 
     @Test
 	public void testHashSet_AddTwiceCollision() {
-	    HashSet<PersonBadHash> set = new HashSet<>();
-	    boolean addedFirst = set.add(new PersonBadHash(5));
-	    boolean addedSecond = set.add(new PersonBadHash(15));
-	    boolean containsFirst = set.contains(new PersonBadHash(5));
-	    boolean containsSecond = set.contains(new PersonBadHash(15));
+	    HashSet<Person> set = new HashSet<>();
+	    boolean addedFirst = set.add(new Person(5));
+	    boolean addedSecond = set.add(new Person(15));
+	    boolean containsFirst = set.contains(new Person(5));
+	    boolean containsSecond = set.contains(new Person(15));
 	    assertTrue(addedFirst);
 	    assertTrue(containsFirst);
 	    assertTrue(addedSecond);
@@ -43,7 +42,7 @@ public class HashSetTest {
 	}
 
     @Test
-	public void testHashSet_RemoveGoodHash() {
+	public void testHashSet_RemoveAdded() {
 	    HashSet<Person> set = new HashSet<>();
 	    boolean added = set.add(new Person(5));
 	    assertEquals(1, set.size());
@@ -64,24 +63,24 @@ public class HashSetTest {
 
     @Test
 	public void testHashSet_SizeAddAndRemove() {
-	    HashSet<PersonBadHash> set = new HashSet<>();
-	    set.add(new PersonBadHash(5));
+	    HashSet<Person> set = new HashSet<>();
+	    set.add(new Person(5));
 	    assertEquals(1, set.size());
-	    set.add(new PersonBadHash(15));
+	    set.add(new Person(15));
 	    assertEquals(2, set.size());
-	    set.remove(new PersonBadHash(5));
+	    set.remove(new Person(5));
 	    assertEquals(1, set.size());
-	    set.remove(new PersonBadHash(15));
+	    set.remove(new Person(15));
 	    assertEquals(0, set.size());
 	}
 
     @Test
 	public void testHashSet_RemoveHashCollision() {
-	    HashSet<PersonBadHash> set = new HashSet<>();
-	    boolean addedFirst = set.add(new PersonBadHash(5));
-	    boolean addedSecond = set.add(new PersonBadHash(15));
-	    boolean removedFirst = set.remove(new PersonBadHash(5));
-	    boolean removedSecond = set.remove(new PersonBadHash(15));
+	    HashSet<Person> set = new HashSet<>(1);
+	    boolean addedFirst = set.add(new Person(5));
+	    boolean addedSecond = set.add(new Person(15));
+	    boolean removedFirst = set.remove(new Person(5));
+	    boolean removedSecond = set.remove(new Person(15));
 	    assertTrue(addedFirst);
 	    assertTrue(removedFirst);
 	    assertTrue(addedSecond);
