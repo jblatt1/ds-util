@@ -23,6 +23,15 @@ public class HashSet<T> {
 	this.size = 0;
     }
 
+    private void resize() {
+	Object[] items = this.toArray();
+	this.numBuckets *= 2;
+	this.buckets = new List[this.numBuckets];
+	for(Object o: items) {
+	    this.add((T) o);
+	}
+    }
+
     private int indexOf(T o) {
 	int hash = o.hashCode();
 	return hash%this.numBuckets;
@@ -44,6 +53,10 @@ public class HashSet<T> {
 		this.size++;
 	    }
 	    return added;
+	}
+	if (this.size()/2 >= this.numBuckets) {
+	    // half full, so resize to avoid collisions
+	    this.resize();
 	}
 	return false;
     }

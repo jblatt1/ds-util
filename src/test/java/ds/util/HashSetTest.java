@@ -97,5 +97,17 @@ public class HashSetTest {
 	    assertEquals(arr.length, 1);
 	    assertTrue(set.contains(arr[0]));
 	}
+    @Test
+	public void testHashSet_Resize() {
+	    HashSet<Person> set = new HashSet<>(3);
+	    Person p1 = new Person(1);
+	    Person p2 = new Person(4);
+	    Person p3 = new Person(15);
+	    set.add(p1);
+	    set.add(p2);
+	    //this add should cause a resize
+	    set.add(p3);
+	    assertEquals(set.size(), 3);
+	}
 }
 
