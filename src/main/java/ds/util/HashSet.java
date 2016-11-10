@@ -114,12 +114,11 @@ public class HashSet<T> {
     }
 
     public boolean removeAll(Collection<T> c) {
+	boolean changed = false;
 	for(T val: c) {
-	    if(!this.remove(val)) {
-		return false;
-	    }
+	    changed = changed || this.remove(val);
 	}
-	return true;
+	return changed;
     }
 
     public boolean retainAll(Collection<T> c) {
