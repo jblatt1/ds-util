@@ -127,7 +127,7 @@ public class HashSetTest {
 	    //this add should cause a resize
 	    set.add(p4);
 	    set.add(p5);
-	    assertEquals(set.size(), 4);
+	    assertEquals(set.size(), 5);
 	}
 }
 

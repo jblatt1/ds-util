@@ -150,11 +150,11 @@ public class HashSet<T> {
 
     private class HashIterator implements Iterator {
 	private List<T>[] entries;
-	private Container curr;
+	private Entry curr;
 
 	public HashIterator() {
 	    this.entries = buckets;
-	    this.curr = new Container(0, 0);
+	    this.curr = new Entry(0, 0);
 	}
 
 	private List<T> getBucket(int bucketNum) {
@@ -164,47 +164,47 @@ public class HashSet<T> {
 	    return null;
 	}
 
-	private Container getNext(Container o) {
-	    Container c = new Container(o);
+	private Entry getNext(Entry o) {
+	    Entry c = new Entry(o);
 	    if(c.currBucket >= this.entries.length) {
 		return c;
 	    }
 	    List<T> bucket = this.getBucket(c.currBucket);
 	    if(bucket == null || c.currIndex >= bucket.size()) {
-		return this.getNext(new Container(c.currBucket+1, 0));
+		return this.getNext(new Entry(c.currBucket+1, 0));
 	    } else {
 		c.element = bucket.get(c.currIndex);
 		return c;
 	    }
 	}
 
-	private class Container {
+	private class Entry {
 	    public int currBucket;
 	    public int currIndex;
 	    public T element;
 
-	    public Container() {
+	    public Entry () {
 		this(0);
 	    }
-	    public Container(int currBucket) {
+	    public Entry(int currBucket) {
 		this(currBucket, 0);
 	    }
-	    public Container(int currBucket, int currIndex) {
+	    public Entry(int currBucket, int currIndex) {
 		this.currBucket = currBucket;
 		this.currIndex = currIndex;
 	    }
-	    public Container(Container c) {
+	    public Entry(Entry c) {
 		this(c.currBucket, c.currIndex); 
 	    }
 	}
 
 	public boolean hasNext() {
-	    Container next = this.getNext(this.curr);
+	    Entry next = this.getNext(this.curr);
 	    return next.element != null;
 	}
 
 	public T next() {
-	    Container next = this.getNext(this.curr);
+	    Entry next = this.getNext(this.curr);
 	    this.curr = next;
 	    return next.element;
 	}
