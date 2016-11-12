@@ -114,12 +114,12 @@ public class HashSetTest {
 
     @Test
 	public void testHashSet_ResizeTwice() {
-	    HashSet<Person> set = new HashSet<>(3);
-	    Person p1 = new Person(1);
-	    Person p2 = new Person(4);
-	    Person p3 = new Person(15);
-	    Person p4 = new Person(20);
-	    Person p5 = new Person(24);
+	    HashSet<Integer> set = new HashSet<>(3);
+	    Integer p1 = new Integer(1);
+	    Integer p2 = new Integer(4);
+	    Integer p3 = new Integer(15);
+	    Integer p4 = new Integer(20);
+	    Integer p5 = new Integer(24);
 	    set.add(p1);
 	    set.add(p2);
 	    //this add should cause a resize
