@@ -70,7 +70,7 @@ public class HashSet<T> {
 
     public void clear() {
 	//TODO: use iterator to do this
-	Interator i = this.iterator();
+	Iterator i = this.iterator();
 	while(i.hasNext()) {
 	    i.remove();
 	    i.next();
