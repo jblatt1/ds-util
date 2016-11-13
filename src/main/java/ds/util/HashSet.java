@@ -63,11 +63,6 @@ public class HashSet<T> {
 
     public boolean addAll(Collection<T> c) {
 	for(T val: c) {
-	    if(!this.contains(val)) {
-		return false;
-	    }
-	}
-	for(T val: c) {
 	    this.add(val);
 	}
 	return true;
@@ -75,6 +70,11 @@ public class HashSet<T> {
 
     public void clear() {
 	//TODO: use iterator to do this
+	Interator i = this.iterator();
+	while(i.hasNext()) {
+	    i.remove();
+	    i.next();
+	}
     }
 
     public boolean contains(Object value) {
