@@ -20,12 +20,12 @@ public class ArrayList<T> {
 	Object[] items = this.items;
 	this.items = new Object[this.capacity];
 	for(int i=0; i<this.size; i++) {
-	    this.add(items[i]);
+	    this.add((T) items[i]);
 	}
     }
 
 
-    public boolean add(Object t) {
+    public boolean add(T t) {
 	if(this.capacity <= this.size) {
 	    this.grow(this.capacity * 2);
 	}
@@ -38,6 +38,15 @@ public class ArrayList<T> {
 	    throw new IndexOutOfBoundsException();
 	}
 	return (T) this.items[i];
+    }
+
+    public boolean contains(T t) {
+	for(int i=0; i<this.size; i++) {
+	    if(this.get(i).equals(t)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
 }
