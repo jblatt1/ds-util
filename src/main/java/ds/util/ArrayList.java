@@ -41,12 +41,33 @@ public class ArrayList<T> {
     }
 
     public boolean contains(T t) {
-	for(int i=0; i<this.size; i++) {
-	    if(this.get(i).equals(t)) {
-		return true;
-	    }
-	}
-	return false;
+	return this.indexOf(t) != -1;
     }
 
+    public int indexOf(T t) {
+	for(int i=0; i<this.size; i++) {
+	    if(this.get(i).equals(t)) {
+		return i;
+	    }
+	}
+	return -1;
+    }
+
+    public boolean remove(T t) {
+	int index = this.indexOf(t);
+	if(index == -1) {
+	    return false;
+	}
+	return this.remove(index) != null;
+    }
+
+    public T remove(int index) {
+	T item = this.get(index);
+	for(int i=index; i<this.size-1; i++) {
+	    this.items[i] = this.items[i+1];
+	}
+	this.size--;
+	return item;
+    }
+	
 }
