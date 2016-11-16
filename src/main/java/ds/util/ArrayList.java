@@ -12,11 +12,16 @@ public class ArrayList<T> {
 
     public ArrayList(int capacity) {
 	this.size = 0;
-	this.grow(capacity); 
+	this.capacity = capacity;
+	this.grow(); 
     }
 
-    private void grow(int capacity) {
-	this.capacity = capacity;
+    private void grow() {
+	if(this.size < this.capacity/2 && this.items != null) {
+	    // no need to grow
+	    return;
+	}
+	this.capacity *= 2;
 	Object[] items = this.items;
 	this.items = new Object[this.capacity];
 	for(int i=0; i<this.size; i++) {
@@ -24,22 +29,25 @@ public class ArrayList<T> {
 	}
     }
 
+    private void rangeCheck(int index) {
+	if(index < 0 || index >= this.size) {
+	    throw new IndexOutOfBoundsException();
+	}
+    }
+	    
+
     public int size() {
 	return this.size;
     }
 
     public boolean add(T t) {
-	if(this.size > this.capacity/2) {
-	    this.grow(this.capacity * 2);
-	}
+	this.grow();
 	this.items[this.size++] = t;
 	return true;
     }
 
     public T get(int i) throws IndexOutOfBoundsException {
-	if(i < 0 || i >= this.size) {
-	    throw new IndexOutOfBoundsException();
-	}
+	this.rangeCheck(i);
 	return (T) this.items[i];
     }
 
@@ -72,5 +80,20 @@ public class ArrayList<T> {
 	this.size--;
 	return item;
     }
-	
+
+    public T set(int index, T t) {
+	T oldVal = this.get(index);
+	this.items[index] = t;
+	return oldVal;
+    }
+
+    public void add(int index, T t) {
+	this.rangeCheck(index);
+	this.grow();
+	for(int i=this.size+1; i<index; i--) {
+	    this.items[i] = this.items[i-1];
+	}
+	this.items[index] = t;
+    }
+
 }
