@@ -10,7 +10,7 @@ public class ArrayList<T> {
 	this(10);
     }
 
-    private ArrayList(int capacity) {
+    public ArrayList(int capacity) {
 	this.size = 0;
 	this.grow(capacity); 
     }
@@ -20,13 +20,16 @@ public class ArrayList<T> {
 	Object[] items = this.items;
 	this.items = new Object[this.capacity];
 	for(int i=0; i<this.size; i++) {
-	    this.add((T) items[i]);
+	    this.items[i] = (T) items[i];
 	}
     }
 
+    public int size() {
+	return this.size;
+    }
 
     public boolean add(T t) {
-	if(this.capacity <= this.size) {
+	if(this.size > this.capacity/2) {
 	    this.grow(this.capacity * 2);
 	}
 	this.items[this.size++] = t;
@@ -34,7 +37,7 @@ public class ArrayList<T> {
     }
 
     public T get(int i) throws IndexOutOfBoundsException {
-	if(i >= this.size) {
+	if(i < 0 || i >= this.size) {
 	    throw new IndexOutOfBoundsException();
 	}
 	return (T) this.items[i];

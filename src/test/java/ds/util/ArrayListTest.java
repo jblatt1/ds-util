@@ -68,7 +68,7 @@ public class ArrayListTest {
 
     @Test
 	public void testArrayList_Resize() {
-	    ArrayList<Person> list = new ArrayList<>(3);
+	    ArrayList<Person> list = new ArrayList<>(4);
 	    Person p1 = new Person(1);
 	    Person p2 = new Person(4);
 	    Person p3 = new Person(15);
@@ -81,7 +81,7 @@ public class ArrayListTest {
 
     @Test
 	public void testArrayList_ResizeTwice() {
-	    ArrayList<Integer> list = new ArrayList<>(3);
+	    ArrayList<Integer> list = new ArrayList<>(4);
 	    Integer p1 = new Integer(1);
 	    Integer p2 = new Integer(4);
 	    Integer p3 = new Integer(15);
