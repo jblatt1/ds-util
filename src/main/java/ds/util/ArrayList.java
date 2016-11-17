@@ -34,7 +34,6 @@ public class ArrayList<T> {
 	    throw new IndexOutOfBoundsException();
 	}
     }
-	    
 
     public int size() {
 	return this.size;
@@ -46,7 +45,7 @@ public class ArrayList<T> {
 	return true;
     }
 
-    public T get(int i) throws IndexOutOfBoundsException {
+    public T get(int i) {
 	this.rangeCheck(i);
 	return (T) this.items[i];
     }
