@@ -15,7 +15,16 @@ public class Heap<T extends Comparable<T>> {
         this.size = 0;
     }
 
+    public T max() {
+        return this.get(0);
+    }
+
+    public T pop() {
+        return this.remove(0);
+    }
+
     public boolean add(T item) {
+        //TODO actually add
         int index = this.index(item);
         this.items[index] = item;
         this.size++;
@@ -23,16 +32,27 @@ public class Heap<T extends Comparable<T>> {
     }
 
     private boolean add(T item, int index) {
+        //TODO actually add
         if(index < 0 || index >= this.size) {
-
         }
         return false;
     }
 
+    private void swap(int first, int second) {
+        T temp = this.get(first);
+        this.items[first] = this.get(second);
+        this.items[second] = temp;
+    }
 
     public boolean remove(T item) {
+        //TODO actually remove
         int index = this.index(item);
         return false;
+    }
+
+    public T remove(int index) {
+    //TODO actually remove
+        return this.get(index);
     }
 
     public T get(int index) {
