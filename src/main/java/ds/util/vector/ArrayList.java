@@ -1,4 +1,4 @@
-package ds.util;
+package ds.util.vector;
 
 @SuppressWarnings("unchecked")
 public class ArrayList<T> {

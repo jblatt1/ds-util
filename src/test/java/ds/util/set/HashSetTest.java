@@ -1,12 +1,12 @@
-package ds.util;
+package ds.util.set;
 
-import ds.util.HashSet;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 
 import ds.util.beans.Person;
+import ds.util.set.HashSet;
 
 public class HashSetTest {
 
