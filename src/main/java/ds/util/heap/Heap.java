@@ -6,70 +6,78 @@ public class Heap<T extends Comparable<T>> {
     int capacity;
 
     public Heap() {
-	this(1<<4);
+        this(1<<4);
     }
 
     private Heap(int capacity) {
-	this.capacity = capacity;
-	this.items = new Object[this.capacity];
-	this.size = 0;
+        this.capacity = capacity;
+        this.items = new Object[this.capacity];
+        this.size = 0;
     }
 
     public boolean add(T item) {
-	int index = this.index(item);
-	this.items[index] = item;
-	this.size++;
-	return true;
+        int index = this.index(item);
+        this.items[index] = item;
+        this.size++;
+        return true;
     }
+
+    private boolean add(T item, int index) {
+        if(index < 0 || index >= this.size) {
+
+        }
+        return false;
+    }
+
 
     public boolean remove(T item) {
-	Integer index = this.index(item);
-	return false;
+        int index = this.index(item);
+        return false;
     }
 
-    public T get(Integer index) {
-	if(index < this.size) {
-	    return (T) this.items[index];
-	}
-	throw new IndexOutOfBoundsException();
+    public T get(int index) {
+        if(index < 0 || index >= this.size) {
+            throw new IndexOutOfBoundsException();
+        }
+        return (T) this.items[index];
     }
 
-    private Integer index(T item) {
-	return this.index(item, 0);
-    }
-    
-    private Integer index(T item, Integer currIndex) {
-	if(currIndex == null || item.compareTo(this.get(currIndex)) > 0) {
-	    return null;
-	}
-	if(this.items[currIndex].equals(item)) {
-	    return currIndex;
-	}
-	Integer index = this.index(item, this.left(currIndex));
-	if(index != null) {
-	    return index;
-	}
-	index = this.index(item, this.right(currIndex));
-	return index;
+    private int index(T item) {
+        return this.index(item, 0);
     }
 
-    private Integer rangeCheck(int index) {
-	if(index > this.size) {
-	    return null;
-	}
-	return index;
+    private int index(T item, int currIndex) {
+        if(currIndex == -1 || item.compareTo(this.get(currIndex)) > 0) {
+            return -1;
+        }
+        if(this.items[currIndex].equals(item)) {
+            return currIndex;
+        }
+        int index = this.index(item, this.left(currIndex));
+        if(index != -1) {
+            return index;
+        }
+        index = this.index(item, this.right(currIndex));
+        return index;
     }
 
-    private Integer left(int i) {
-	return this.rangeCheck(((i+1)*2) - 1);
+    private int rangeCheck(int index) {
+        if(index > this.size) {
+            return -1;
+        }
+        return index;
     }
 
-    private Integer right(int i) {
-	return this.rangeCheck((i+1)*2);
+    private int left(int i) {
+        return this.rangeCheck(((i+1)*2) - 1);
     }
 
-    private Integer parent(int i) {
-	return this.rangeCheck((i-1)/2);
+    private int right(int i) {
+        return this.rangeCheck((i+1)*2);
+    }
+
+    private int parent(int i) {
+        return this.rangeCheck((i-1)/2);
     }
 
 }
