@@ -29,6 +29,18 @@ public class ArrayList<T> {
 	}
     }
 
+    private void shrink() {
+	if (this.size > this.capacity/4) {
+	    return;
+	}
+	this.capacity /= 2;
+	Object[] items = this.items;
+	this.items = new Object[this.capacity];
+	for(int i=0; i<this.size; i++) {
+	    this.items[i] = (T) items[i];
+	}
+    }
+
     private void rangeCheck(int index) {
 	if(index < 0 || index >= this.size) {
 	    throw new IndexOutOfBoundsException();
@@ -77,6 +89,7 @@ public class ArrayList<T> {
 	    this.items[i] = this.items[i+1];
 	}
 	this.size--;
+	this.shrink();
 	return item;
     }
 
