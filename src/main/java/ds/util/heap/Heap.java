@@ -10,9 +10,33 @@ public class Heap<T extends Comparable<T>> {
     }
 
     private Heap(int capacity) {
-        this.capacity = capacity;
-        this.items = new Object[this.capacity];
         this.size = 0;
+        this.resize(capacity);
+    }
+
+    private void grow() {
+        if(this.size > this.capacity/2) {
+            this.resize(this.capacity*2);
+        }
+    }
+
+    private void shrink() {
+        if(this.size < this.capacity/4) {
+            this.resize(this.capacity/2);
+        }
+    }
+
+    private void resize(int capacity) {
+        if(this.size < capacity) {
+            // TODO throw an exception?
+            return;
+        }
+        this.capacity = capacity;
+        Object[] oldItems = this.items;
+        this.items = new Object[this.capacity];
+        for(int i=0; i<this.size; i++) {
+            this.items[i] = oldItems[i];
+        }
     }
 
     public T max() {
@@ -24,18 +48,22 @@ public class Heap<T extends Comparable<T>> {
     }
 
     public boolean add(T item) {
-        //TODO actually add
-        int index = this.index(item);
-        this.items[index] = item;
+        int indexToAddTo = this.size;
+        this.items[indexToAddTo] = item;
         this.size++;
-        return true;
+        return this.balance(indexToAddTo);
     }
 
-    private boolean add(T item, int index) {
-        //TODO actually add
-        if(index < 0 || index >= this.size) {
+    private boolean balance(int index) {
+        if(this.rangeCheck(index) == -1) {
+            throw new IndexOutOfBoundsException();
         }
-        return false;
+        int parentIndex = this.parent(index);
+        if(parentIndex != -1 && this.get(index).compareTo(this.get(parentIndex)) > 0) {
+           this.swap(index, parentIndex);
+           return this.balance(parentIndex);
+        }
+        return true;
     }
 
     private void swap(int first, int second) {
@@ -51,7 +79,7 @@ public class Heap<T extends Comparable<T>> {
     }
 
     public T remove(int index) {
-    //TODO actually remove
+        //TODO actually remove
         return this.get(index);
     }
 
@@ -67,14 +95,14 @@ public class Heap<T extends Comparable<T>> {
     }
 
     private int index(T item, int currIndex) {
-        if(currIndex == -1 || item.compareTo(this.get(currIndex)) > 0) {
+        if(this.rangeCheck(currIndex) != -1 || item.compareTo(this.get(currIndex)) > 0) {
             return -1;
         }
         if(this.items[currIndex].equals(item)) {
             return currIndex;
         }
         int index = this.index(item, this.left(currIndex));
-        if(index != -1) {
+        if(this.rangeCheck(index) != -1) {
             return index;
         }
         index = this.index(item, this.right(currIndex));
@@ -82,7 +110,7 @@ public class Heap<T extends Comparable<T>> {
     }
 
     private int rangeCheck(int index) {
-        if(index > this.size) {
+        if(index < 0 || index > this.size) {
             return -1;
         }
         return index;
