@@ -27,7 +27,7 @@ public class Heap<T extends Comparable<T>> {
     }
 
     private void resize(int capacity) {
-        if(this.size < capacity) {
+        if(this.size > capacity) {
             // TODO throw an exception?
             return;
         }
@@ -44,14 +44,25 @@ public class Heap<T extends Comparable<T>> {
     }
 
     public T pop() {
-        return this.remove(0);
+        T item = this.get(0);
+        this.remove(item);
+        return item;
     }
 
     public boolean add(T item) {
+        this.grow();
         int indexToAddTo = this.size;
         this.items[indexToAddTo] = item;
         this.size++;
         return this.balance(indexToAddTo);
+    }
+    
+    public boolean remove(T item) {
+        this.shrink();
+        int index = this.index(item);
+        this.items[index] = this.get(this.size - 1);
+        this.size--;
+        return this.balance(index);
     }
 
     private boolean balance(int index) {
@@ -70,17 +81,6 @@ public class Heap<T extends Comparable<T>> {
         T temp = this.get(first);
         this.items[first] = this.get(second);
         this.items[second] = temp;
-    }
-
-    public boolean remove(T item) {
-        //TODO actually remove
-        int index = this.index(item);
-        return false;
-    }
-
-    public T remove(int index) {
-        //TODO actually remove
-        return this.get(index);
     }
 
     public T get(int index) {
