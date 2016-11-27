@@ -3,14 +3,14 @@ package ds.util.vector;
 import ds.util.vector.ArrayList;
 
 @SuppressWarnings("unchecked")
-public class Queue<T> {
+public class Stack<T> {
     private ArrayList<T> list;
 
-    public Queue() {
+    public Stack() {
         this(10);
     }
 
-    public Queue(int capacity) {
+    public Stack(int capacity) {
         this.list = new ArrayList<T>(capacity);
     }
 
@@ -18,15 +18,15 @@ public class Queue<T> {
         return this.list.size();
     }
 
-    public boolean enqueue(T t) {
-        return this.list.add(t);
+    public boolean push(T t) {
+        return this.list.add(0, t);
     }
 
     public T peek() {
         return (T) this.list.get(0);
     }
 
-    public T dequeue() {
+    public T pop() {
         return this.list.remove(0);
     }
 
