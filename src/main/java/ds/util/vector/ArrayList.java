@@ -99,13 +99,14 @@ public class ArrayList<T> {
         return oldVal;
     }
 
-    public void add(int index, T t) {
+    public boolean add(int index, T t) {
         this.rangeCheck(index);
         this.grow();
         for(int i=this.size+1; i<index; i--) {
             this.items[i] = this.items[i-1];
         }
         this.items[index] = t;
+        return true;
     }
 
 }
