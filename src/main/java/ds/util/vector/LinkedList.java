@@ -3,15 +3,19 @@ package ds.util.vector;
 @SuppressWarnings("unchecked")
 public class LinkedList<T> {
     private LinkedList<T> next;
-    private int size;
+    private int index;
     private T data;
 
     public LinkedList() {
-        this.size = 0;
+        this(0);
+    }
+
+    public LinkedList(index) {
+        this.index = index;
     }
 
     public int size() {
-        return this.size;
+        return this.index;
     }
 
     public boolean add(T t) {
@@ -19,11 +23,11 @@ public class LinkedList<T> {
     }
 
     public T get(int i) {
-        if(this.size <= i) {
-            throw new IndexOutOfBoundsException();
-        }
         if (i == 0) {
             return this.data;
+        }
+        if(this.next == null) {
+            throw new IndexOutOfBoundsException();
         }
         return next.get(i-1); 
     }
@@ -39,7 +43,12 @@ public class LinkedList<T> {
     }
 
     public int indexOf(T t) {
-        return -1;
+        if(t.equals(this.data)) {
+            return this.index;
+        }
+        else {
+            return this.next.indexOf(t);
+        }
     }
 
     public boolean remove(T t) {
