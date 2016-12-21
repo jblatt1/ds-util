@@ -2,9 +2,10 @@ package ds.util.beans;
 
 public class Person {
 
-    protected String firstName;
-    protected String lastName;
-    protected Integer ssn;
+    private final String firstName;
+    private final String lastName;
+    private final Integer ssn;
+
 
     public Person(int ssn) {
 	this("","", ssn);
